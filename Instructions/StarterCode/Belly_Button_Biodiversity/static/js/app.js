@@ -5,39 +5,49 @@ function buildMetadata(sample) {
     var data = [data];
     console.log(data);
   var meta_chart = d3.select("#sample-metadata");
+  meta_chart.html("");
   data.forEach((data) => {
-    var row = meta_chart.append("tr");
+    var row = meta_chart.append("tbody");
     Object.entries(data).forEach(([key, value]) => {
-      var cell = row.append("td");
-      cell.text(value);
+      var cell = row.append("tr");
+      
+      cell.text(`${key}: ${value}`);
+      
     console.log(`Key: ${key} | Value: ${value}`);
-
+ 
     });
+    
   });
 
 });
 
 }
- 
-
-
-  // @TODO: Complete the following function that builds the metadata panel
-
-  // Use `d3.json` to fetch the metadata for a sample
-    // Use d3 to select the panel with id of `#sample-metadata`
-
-    // Use `.html("") to clear any existing metadata
-
-    // Use `Object.entries` to add each key and value pair to the panel
-    // Hint: Inside the loop, you will need to use d3 to append new
-    // tags for each key-value in the metadata.
-
     // BONUS: Build the Gauge Chart
     // buildGauge(data.WFREQ);
 
 
 function buildCharts(sample) {
+  d3.json(`/samples/${sample}`).then(function(data) {
+    var data = [data];
+    console.log(data);
+    var key1 = Object.keys(data);
+    console.log(key1);
+  Object.entries(data).forEach(([key,value]) => {
+    console.log(key, value);
+  });
+  //   var row = meta_chart.append("tbody");
+  //   Object.entries(data).forEach(([key, value]) => {
+  //     var cell = row.append("tr");
+      
+  //     cell.text(`${key}: ${value}`);
+      
+  //   console.log(`Key: ${key} | Value: ${value}`);
+ 
+    // });
+    
+  });
 
+}
   // @TODO: Use `d3.json` to fetch the sample data for the plots
 
     // @TODO: Build a Bubble Chart using the sample data
@@ -45,7 +55,7 @@ function buildCharts(sample) {
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
-}
+ 
 
 function init() {
   // Grab a reference to the dropdown select element
