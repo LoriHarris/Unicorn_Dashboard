@@ -101,8 +101,8 @@ function buildCharts(sample) {
   }];
   
   var layout = {
-    height: 500,
-    width: 500
+    height: 425,
+    width: 425
   };
  
 // Plot the chart to a div tag with id "plot"
@@ -114,16 +114,23 @@ Plotly.newPlot("pie", data, layout);
 d3.json(`/samples/${sample}`).then(function(data) {
   console.log(data.sample_values)
     var data1 = [{
-      x: data.otu_ids,
-      y: data.sample_values,
+      x: data.otu_ids.slice(0,10),
+      y: data.sample_values.slice(0,10),
       mode: 'markers',
+      marker: {
+     
+        color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)','rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)' ],
+        opacity: [1, 0.8, 0.6, 0.4,1, 0.8, 0.6, 0.4, .6, .8 ],
+        size: [40, 45, 50, 55, 60, 65, 70, 75, 80, 100]
+      }
+
     }];
 
     var layout = {
       title: 'Marker Size',
       showlegend: false,
       height: 600,
-      width: 600
+      width: 1400
     };
     
     Plotly.newPlot('bubble', data1, layout);
