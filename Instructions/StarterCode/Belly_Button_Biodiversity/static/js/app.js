@@ -22,7 +22,7 @@ function buildMetadata(sample) {
       console.log(WFREQ)
       var traceA = [{ type: 'scatter',
       x: [0], y:[0],
-       marker: {size: 28, color:'850000'},
+       marker: {size: 20, color:'black'},
        showlegend: false,
        name: 'speed',
       //  text: data.WFREQ,
@@ -64,9 +64,9 @@ var path = mainPath.concat(pathX,space,pathY,pathEnd);
         shapes:[{
             type: 'path',
             path: path,
-            fillcolor: '850000',
+            fillcolor: 'black',
             line: {
-              color: '850000'
+              color: 'black'
             }
           }],
         title: 'Scrub Frequency',
