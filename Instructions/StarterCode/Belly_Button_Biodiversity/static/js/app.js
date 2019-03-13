@@ -14,14 +14,18 @@ function buildMetadata(sample) {
       cell.text(`${key}: ${value}`);
       
     console.log(`Key: ${key} | Value: ${value}`);
-    var WFREQ = (data.WFREQ*20)
-
+    });
+  });
+});
+  d3.json(`/metadata/${sample}`).then(function(data) {
+      var WFREQ = (data.WFREQ*20)
+      console.log(WFREQ)
       var traceA = [{ type: 'scatter',
       x: [0], y:[0],
        marker: {size: 28, color:'850000'},
        showlegend: false,
        name: 'speed',
-       text: data.WFREQ,
+      //  text: data.WFREQ,
        hoverinfo: 'text+name'},
         {
         
@@ -41,6 +45,7 @@ function buildMetadata(sample) {
       }];
       
       var degrees = 180- WFREQ;
+      console.log(degrees)
      radius = .5;
 var radians = degrees * Math.PI / 180;
 var x = radius * Math.cos(radians);
@@ -74,12 +79,11 @@ var path = mainPath.concat(pathX,space,pathY,pathEnd);
                    showgrid: false, range: [-1, 1]}
       };
       
-      Plotly.plot("gauge", traceA, layout, {staticPlot: true});
+      Plotly.newPlot("gauge", traceA, layout, {staticPlot: true});
         
 
     });
-   }); 
-  });
+   
 
 }
     // BONUS: Build the Gauge Chart
