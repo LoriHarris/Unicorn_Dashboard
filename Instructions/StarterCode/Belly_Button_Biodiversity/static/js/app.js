@@ -30,12 +30,29 @@ function buildCharts(sample) {
   d3.json(`/samples/${sample}`).then(function(data) {
     var data = [data];
     console.log(data);
-    var key1 = Object.keys(data);
+    var key1 = Object.values(data);
     console.log(key1);
-  Object.entries(data).forEach(([key,value]) => {
-    console.log(key, value);
+  // Object.entries(data).forEach(([key,value]) => {
+  //   console.log(key, value);
+  key1.forEach((item) => {
+    var values1 = Object.values(key1);
+    console.log(values1)
+  var pie_data = [{
+    values: [values1[0], values1[1], values1[2]],
+    labels: ["ID", "Other", "Sample Type"],
+    type: 'pie'
+  }];
+  var layout = {
+    height: 400,
+    width:500
+  };
+  Plotly.newPlot("pie", pie_data, layout);
+
   });
-  //   var row = meta_chart.append("tbody");
+  });
+
+}
+//   var row = meta_chart.append("tbody");
   //   Object.entries(data).forEach(([key, value]) => {
   //     var cell = row.append("tr");
       
@@ -45,9 +62,7 @@ function buildCharts(sample) {
  
     // });
     
-  });
-
-}
+  
   // @TODO: Use `d3.json` to fetch the sample data for the plots
 
     // @TODO: Build a Bubble Chart using the sample data
