@@ -9,20 +9,37 @@
    font-size: 20 rem;
    color: white;
  }
+.jumbotron {
+  padding: 0rem 0rem !important;
+  margin-bottom: 1rem !important;
+}
 .hero {
     position: relative;
     height: 350px;
-    padding: 20px;
+    padding: 5px;
     margin: 0;
     background: black;
-    background-image: url(bacteria.jpg);
+    background-image: url('/static/bacteria.jpg');
     background-attachment: fixed;
     background-position: bottom center;
     background-size: cover;
     text-align: center !important;
     vertical-align: middle;
   }
+.panel-primary{
+  background-color:white !important;
+  border-color: green !important;
+}
   
+.panel-heading {
+  background-color: green !important;
+  border-color: green !important;
+}
+.well {
+  
+  background-color: green !important;
+  border-color: green !important;
+}
   .text-center {
     text-align: center !important;
     vertical-align: middle;

@@ -19,6 +19,7 @@ function buildMetadata(sample) {
 });
   d3.json(`/metadata/${sample}`).then(function(data) {
       var WFREQ = (data.WFREQ*20)
+      
       console.log(WFREQ)
       var traceA = [{ type: 'scatter',
       x: [0], y:[0],
@@ -41,7 +42,7 @@ function buildMetadata(sample) {
         "rgb(204, 204, 0)", "rgb(128, 255, 0)", "rgb(255, 255, 0)", "rgb(153, 255, 0)", "white"]},
           
        
-        hoverinfo: "label"
+        hoverinfo: "none"
     
       }];
       
@@ -93,11 +94,15 @@ var path = mainPath.concat(pathX,space,pathY,pathEnd);
 
 function buildCharts(sample) {
   d3.json(`/samples/${sample}`).then(function(data) {
-  var data = [{
-    values: data.sample_values.slice(0,10),
-    labels: data.otu_ids.slice(0,10),
+    var samples = data.sample_values.slice(0,10)
+    var otu_ids = data.otu_ids.slice(0,10)
+    var labels = data.otu_labels.slice(0,10)
+    var data = [{
+    values: samples,
+    labels: otu_ids,
     hoverinfo: 'text+percent+name',
-    text: data.otu_labels.slice(0,10),
+    text: labels,
+    // marker: { colors: [ otu_ids]}
     marker: { colors: [ "rgb(51, 102, 0)", "rgb(102, 102, 0)", "rgb(76, 153, 0)", "rgb(153, 153, 0)", "rgb(102, 204, 0)", 
     "rgb(204, 204, 0)", "rgb(128, 255, 0)", "rgb(255, 255, 0)", "rgb(153, 255, 0)", "rgb(255, 255, 51)"]},
 
@@ -117,15 +122,20 @@ Plotly.newPlot("pie", data, layout);
 
 d3.json(`/samples/${sample}`).then(function(data) {
   console.log(data.sample_values)
+    var samples = data.sample_values.slice(0,10)
+    var otu_ids = data.otu_ids.slice(0,10)
+    var labels = data.otu_labels.slice(0,10)
     var data1 = [{
-      x: data.otu_ids.slice(0,10),
-      y: data.sample_values.slice(0,10),
+      x: otu_ids,
+      y: samples,
+      text: labels,
       mode: 'markers',
       marker: {
-     
+        // color: otu_ids,
         color: [ "rgb(51, 102, 0)", "rgb(102, 102, 0)", "rgb(76, 153, 0)", "rgb(153, 153, 0)", "rgb(102, 204, 0)", 
         "rgb(204, 204, 0)", "rgb(128, 255, 0)", "rgb(255, 255, 0)", "rgb(153, 255, 0)", "rgb(255, 255, 51)"],
-        size: [40, 45, 50, 55, 60, 65, 70, 75, 80, 100]
+        size: samples,
+        
       }
 
     }];
@@ -133,8 +143,8 @@ d3.json(`/samples/${sample}`).then(function(data) {
     var layout = {
       title: 'Marker Size',
       showlegend: false,
-      height: 600,
-      width: 1400
+      height: 400,
+      width: 1200
     };
     
     Plotly.newPlot('bubble', data1, layout);
