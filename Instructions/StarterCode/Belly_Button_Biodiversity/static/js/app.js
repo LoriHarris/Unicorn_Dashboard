@@ -37,7 +37,8 @@ function buildMetadata(sample) {
         direction: "clockwise",
         textinfo: "text",
         textposition: "inside",
-        marker: { colors: ["rgba(255, 0, 0, 0.6)", "rgba(255, 165, 0, 0.6)", "rgba(255, 255, 0, 0.6)", "rgba(144, 238, 144, 0.6)", "rgba(154, 205, 50, 0.6)", "rgba(255, 0, 0, 0.6)", "rgba(255, 165, 0, 0.6)", "rgba(255, 255, 0, 0.6)", "rgba(255, 165, 0, 0.6)", "white"]},
+        marker: { colors: ["rgb(51, 102, 0)", "rgb(102, 102, 0)", "rgb(76, 153, 0)", "rgb(153, 153, 0)", "rgb(102, 204, 0)", 
+        "rgb(204, 204, 0)", "rgb(128, 255, 0)", "rgb(255, 255, 0)", "rgb(153, 255, 0)", "white"]},
           
        
         hoverinfo: "label"
@@ -97,7 +98,8 @@ function buildCharts(sample) {
     labels: data.otu_ids.slice(0,10),
     hoverinfo: 'text+percent+name',
     text: data.otu_labels.slice(0,10),
-    marker: { colors: ["rgba(255, 0, 0, 0.6)", "rgba(255, 165, 0, 0.6)", "rgba(255, 255, 0, 0.6)", "rgba(144, 238, 144, 0.6)", "rgba(154, 205, 50, 0.6)", "rgba(255, 0, 0, 0.6)", "rgba(255, 165, 0, 0.6)", "rgba(255, 255, 0, 0.6)", "rgba(255, 165, 0, 0.6)", "rgba(154, 209, 40, 1"]},
+    marker: { colors: [ "rgb(51, 102, 0)", "rgb(102, 102, 0)", "rgb(76, 153, 0)", "rgb(153, 153, 0)", "rgb(102, 204, 0)", 
+    "rgb(204, 204, 0)", "rgb(128, 255, 0)", "rgb(255, 255, 0)", "rgb(153, 255, 0)", "rgb(255, 255, 51)"]},
 
     type: 'pie'
   }];
@@ -121,8 +123,8 @@ d3.json(`/samples/${sample}`).then(function(data) {
       mode: 'markers',
       marker: {
      
-        color: ["rgba(255, 0, 0, 0.6)", "rgba(255, 165, 0, 0.6)", "rgba(255, 255, 0, 0.6)", "rgba(144, 238, 144, 0.6)", "rgba(154, 205, 50, 0.6)", "rgba(255, 0, 0, 0.6)", "rgba(255, 165, 0, 0.6)", "rgba(255, 255, 0, 0.6)", "rgba(255, 165, 0, 0.6)", "rgba(154, 209, 40, 1"],
-        opacity: [1, 0.8, 0.6, 074,1, 0.8, 0.6, 0.9, .6, .8 ],
+        color: [ "rgb(51, 102, 0)", "rgb(102, 102, 0)", "rgb(76, 153, 0)", "rgb(153, 153, 0)", "rgb(102, 204, 0)", 
+        "rgb(204, 204, 0)", "rgb(128, 255, 0)", "rgb(255, 255, 0)", "rgb(153, 255, 0)", "rgb(255, 255, 51)"],
         size: [40, 45, 50, 55, 60, 65, 70, 75, 80, 100]
       }
 
