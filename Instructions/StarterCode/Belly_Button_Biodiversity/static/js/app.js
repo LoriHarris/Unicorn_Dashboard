@@ -63,6 +63,14 @@ var path = mainPath.concat(pathX,space,pathY,pathEnd);
     
  
       var layout = {
+        title: {
+          text:'Scrub Frequency',
+          font: {
+            family: 'Creepster, cursive',
+            size: 24
+          },
+        },
+        showlegend: false,
         shapes:[{
             type: 'path',
             path: path,
@@ -71,7 +79,6 @@ var path = mainPath.concat(pathX,space,pathY,pathEnd);
               color: 'black'
             }
           }],
-        title: 'Scrub Frequency',
        
         height: 500,
         width: 500,
@@ -88,15 +95,30 @@ var path = mainPath.concat(pathX,space,pathY,pathEnd);
    
 
 }
-    // BONUS: Build the Gauge Chart
-    // buildGauge(data.WFREQ);
-
 
 function buildCharts(sample) {
   d3.json(`/samples/${sample}`).then(function(data) {
-    var samples = data.sample_values.slice(0,10)
-    var otu_ids = data.otu_ids.slice(0,10)
-    var labels = data.otu_labels.slice(0,10)
+    var samples1 = data.sample_values;
+    var otu_ids1 = data.otu_ids;
+    var labels1 = data.otu_labels;
+    var array = []
+    for (var j = 0; j < otu_ids1.length; j++) {
+      array.push({'samples1': samples1[j], 'otu_ids1': otu_ids1[j], 'otu_labels1': labels1[j]}
+    )};
+   var sorted = array.sort(function(a, b) {
+    // var sorted = data.sort(function(a, b) {
+      return parseFloat(b.samples1) - parseFloat(a.samples1);
+    });
+    sorted.sort();
+    // Slice the first 10 objects for plotting
+    sorted = sorted.slice(0, 10);
+    // Reverse the array due to Plotly's defaults
+    sorted = sorted.reverse();
+    console.log(sorted);
+    var samples = sorted.map(row => row.samples1);
+    var otu_ids = sorted.map(row => row.otu_ids1);
+    var labels = sorted.map(row=> row.labels1);
+    console.log(sorted)
     var data = [{
     values: samples,
     labels: otu_ids,
@@ -110,6 +132,15 @@ function buildCharts(sample) {
   }];
   
   var layout = {
+   
+    title: {
+      text:'Top 10 Bacteria',
+      font: {
+        family: 'Creepster, cursive',
+        size: 24
+      },
+    }, 
+    showlegend: false,
     height: 425,
     width: 425
   };
@@ -121,10 +152,23 @@ Plotly.newPlot("pie", data, layout);
 
 
 d3.json(`/samples/${sample}`).then(function(data) {
-  console.log(data.sample_values)
-    var samples = data.sample_values.slice(0,10)
-    var otu_ids = data.otu_ids.slice(0,10)
-    var labels = data.otu_labels.slice(0,10)
+  var samples1 = data.sample_values;
+  var otu_ids1 = data.otu_ids;
+  var labels1 = data.otu_labels;
+  var array = []
+  for (var j = 0; j < otu_ids1.length; j++) {
+    array.push({'samples1': samples1[j], 'otu_ids1': otu_ids1[j], 'otu_labels1': labels1[j]}
+  )};
+ var sorted = array.sort(function(a, b) {
+    return parseFloat(b.samples1) - parseFloat(a.samples1);
+  });
+  sorted.sort();
+  sorted = sorted.slice(0, 10);
+  sorted = sorted.reverse();
+  console.log(sorted);
+  var samples = sorted.map(row => row.samples1);
+  var otu_ids = sorted.map(row => row.otu_ids1);
+  var labels = sorted.map(row=> row.labels1);
     var data1 = [{
       x: otu_ids,
       y: samples,
@@ -141,10 +185,36 @@ d3.json(`/samples/${sample}`).then(function(data) {
     }];
 
     var layout = {
-      title: 'Marker Size',
+      title: {
+        text:'Sample Values',
+        font: {
+          family: 'Creepster, cursive',
+          size: 24
+        },
+      },
       showlegend: false,
-      height: 400,
-      width: 1200
+      height: (Math.max(samples+100)),
+      width: 1200, 
+       xaxis: {
+        title: {
+          text: 'x Axis',
+          font: {
+            family: 'Creepster, cursive',
+            size: 18,
+            color: '#7f7f7f'
+          },
+        },
+      },
+      yaxis: {
+        title: {
+          text: 'y Axis',
+          font: {
+            family: 'Creepster, cursive',
+            size: 18,
+            color: '#7f7f7f'
+          }
+        }
+      }
     };
     
     Plotly.newPlot('bubble', data1, layout);

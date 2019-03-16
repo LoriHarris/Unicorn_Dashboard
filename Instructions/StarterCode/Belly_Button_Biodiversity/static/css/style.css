@@ -15,10 +15,10 @@
 }
 .hero {
     position: relative;
-    height: 350px;
+    height: 450px;
     padding: 5px;
     margin: 0;
-    background: black;
+    background: white;
     background-image: url('/static/bacteria.jpg');
     background-attachment: fixed;
     background-position: bottom center;
@@ -36,7 +36,8 @@
   border-color: green !important;
 }
 .well {
-  
+
+  padding: 10px 15px;
   background-color: green !important;
   border-color: green !important;
 }
@@ -44,6 +45,12 @@
     text-align: center !important;
     vertical-align: middle;
   }
+  body {
+     padding-bottom: 25rem;
+     padding-top: 120px;
+  }
+
+
   @media (min-width: 576px) {
     ..hero {
       max-width: 540px;
