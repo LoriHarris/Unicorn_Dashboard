@@ -27,7 +27,7 @@ db = SQLAlchemy(app)
 Base = automap_base()
 # reflect the tables
 Base.prepare(db.engine, reflect=True)
-
+ 
 # Save references to each table
 Samples = Base.classes.samples
 Samples_Metadata = Base.classes.sample_metadata
