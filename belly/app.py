@@ -29,8 +29,9 @@ Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 
 # Save references to each table
-Samples_Metadata = Base.classes.sample_metadata
 Samples = Base.classes.samples
+Samples_Metadata = Base.classes.sample_metadata
+session = Session(engine)
 
 
 @app.route("/")
