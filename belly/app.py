@@ -7,30 +7,29 @@ import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
+from sqlalchemy import func
 
 from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 
-
 app = Flask(__name__)
-# app = Flask(__name__, static_url_path='', static_folder="")
 
 
 #################################################
 # Database Setup
 #################################################
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL', '') or "sqlite:///db/bellybutton.sqlite"
 
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/bellybutton.sqlite"
 db = SQLAlchemy(app)
 
 # reflect an existing database into a new model
 Base = automap_base()
 # reflect the tables
 Base.prepare(db.engine, reflect=True)
- 
+
 # Save references to each table
-Samples = Base.classes.samples
 Samples_Metadata = Base.classes.sample_metadata
+Samples = Base.classes.samples
 
 
 @app.route("/")
@@ -77,8 +76,9 @@ def sample_metadata(sample):
         sample_metadata["BBTYPE"] = result[5]
         sample_metadata["WFREQ"] = result[6]
 
-    print(sample_metadata)
+    #print(sample_metadata)
     return jsonify(sample_metadata)
+
 
 @app.route("/samples/<sample>")
 def samples(sample):
