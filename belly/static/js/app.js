@@ -7,7 +7,8 @@ function buildMetadata(sample) {
   var meta_chart = d3.select("#sample-metadata");
   meta_chart.html("");
   data.forEach((data) => {
-    var row = meta_chart.append("tbody");
+    var row1 = meta_chart.append("table-responsive");
+    var row = row1.append("tbody");
     Object.entries(data).forEach(([key, value]) => {
       var cell = row.append("tr");
       
@@ -80,15 +81,16 @@ var path = mainPath.concat(pathX,space,pathY,pathEnd);
             }
           }],
        
-        height: 500,
-        width: 500,
+        // height:325,
+        // width: 360,
+        autosize: true,
         xaxis: {zeroline:false, showticklabels:false,
                    showgrid: false, range: [-1, 1]},
         yaxis: {zeroline:false, showticklabels:false,
                    showgrid: false, range: [-1, 1]}
       };
       
-      Plotly.newPlot("gauge", traceA, layout, {staticPlot: true});
+      Plotly.newPlot("gauge", traceA, layout, {responsive: true});
         
 
     });
@@ -118,11 +120,11 @@ function buildCharts(sample) {
     var samples = sorted.map(row => row.samples1);
     var otu_ids = sorted.map(row => row.otu_ids1);
     var labels = sorted.map(row=> row.labels1);
-    console.log(sorted)
+    console.log(labels);
     var data = [{
     values: samples,
     labels: otu_ids,
-    hoverinfo: 'text+percent+name',
+    hoverinfo: 'text+percent',
     text: labels,
     // marker: { colors: [ otu_ids]}
     marker: { colors: [ "rgb(51, 102, 0)", "rgb(102, 102, 0)", "rgb(76, 153, 0)", "rgb(153, 153, 0)", "rgb(102, 204, 0)", 
@@ -141,12 +143,13 @@ function buildCharts(sample) {
       },
     }, 
     showlegend: false,
-    height: 425,
-    width: 425
+    // height: 325,
+    // width: 360,
+    autosize: true,
   };
  
 // Plot the chart to a div tag with id "plot"
-Plotly.newPlot("pie", data, layout);
+Plotly.newPlot("pie", data, layout, {responsive: true});
 
 
 
@@ -193,11 +196,11 @@ d3.json(`/samples/${sample}`).then(function(data) {
         },
       },
       showlegend: false,
-      height: (Math.max(samples+100)),
-      width: 1200, 
+      // height: (Math.max(samples+100)),
+      // width: 1200, 
        xaxis: {
         title: {
-          text: 'x Axis',
+          text: 'Bacteria ID',
           font: {
             family: 'Creepster, cursive',
             size: 18,
@@ -207,7 +210,7 @@ d3.json(`/samples/${sample}`).then(function(data) {
       },
       yaxis: {
         title: {
-          text: 'y Axis',
+          text: 'Samples',
           font: {
             family: 'Creepster, cursive',
             size: 18,
@@ -217,7 +220,7 @@ d3.json(`/samples/${sample}`).then(function(data) {
       }
     };
     
-    Plotly.newPlot('bubble', data1, layout);
+    Plotly.newPlot('bubble', data1, layout, {responsive: true});
   });  
  
   });
