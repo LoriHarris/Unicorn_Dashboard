@@ -26,7 +26,7 @@ function buildMetadata(sample) {
       x: [0], y:[0],
        marker: {size: 20, color:'black'},
        showlegend: false,
-       name: 'speed',
+       name: `Scrubs per week = ${WFREQ / 20}`,
       //  text: data.WFREQ,
        hoverinfo: 'text+name'},
         {
@@ -38,12 +38,14 @@ function buildMetadata(sample) {
         text: ["0-1", "1-2", "2-3", "3-4", "4-5", "5-6", "6-7", "7-8", "8-9", ""],
         direction: "clockwise",
         textinfo: "text",
+        name: `Scrubs per week = ${WFREQ / 20}`,
+
         textposition: "inside",
         marker: { colors: ["rgb(51, 102, 0)", "rgb(102, 102, 0)", "rgb(76, 153, 0)", "rgb(153, 153, 0)", "rgb(102, 204, 0)", 
         "rgb(204, 204, 0)", "rgb(128, 255, 0)", "rgb(255, 255, 0)", "rgb(153, 255, 0)", "white"]},
           
        
-        hoverinfo: "none"
+        hoverinfo: 'name'
     
       }];
       
@@ -103,29 +105,28 @@ function buildCharts(sample) {
     var samples1 = data.sample_values;
     var otu_ids1 = data.otu_ids;
     var labels1 = data.otu_labels;
-    var array = []
-    for (var j = 0; j < otu_ids1.length; j++) {
-      array.push({'samples1': samples1[j], 'otu_ids1': otu_ids1[j], 'otu_labels1': labels1[j]}
-    )};
-   var sorted = array.sort(function(a, b) {
-    // var sorted = data.sort(function(a, b) {
-      return parseFloat(b.samples1) - parseFloat(a.samples1);
-    });
-    sorted.sort();
-    // Slice the first 10 objects for plotting
-    sorted = sorted.slice(0, 10);
-    // Reverse the array due to Plotly's defaults
-    sorted = sorted.reverse();
-    console.log(sorted);
-    var samples = sorted.map(row => row.samples1);
-    var otu_ids = sorted.map(row => row.otu_ids1);
-    var labels = sorted.map(row=> row.labels1);
-    console.log(labels);
+      var array = []
+  for (var j = 0; j < otu_ids1.length; j++) {
+    array.push({'samples1': samples1[j], 'otu_ids1': otu_ids1[j], 'labels1': labels1[j]}
+  )};
+ var sorted = array.sort(function(a, b) {
+    return ((a.samples1>b.samples1) ? -1 :((a.samples1==b.samples1)? 0:1));
+  });
+  for (var k = 0; k<array.length;k++){
+    samples1[k]=array[k].samples1;
+    otu_ids1[k]=array[k].otu_ids1;
+    labels1[k]=array[k].labels1;
+  }
+  labels = labels1.slice(0,10)
+  samples = samples1.slice(0,10)
+  otu_ids=otu_ids1.slice(0,10)
+ 
     var data = [{
     values: samples,
-    labels: otu_ids,
-    hoverinfo: 'text+percent',
-    text: labels,
+    labels: labels,
+    name: `Sample#${ sample}`,
+    hoverinfo: 'label+percent+name',
+    // text: labels,
     // marker: { colors: [ otu_ids]}
     marker: { colors: [ "rgb(51, 102, 0)", "rgb(102, 102, 0)", "rgb(76, 153, 0)", "rgb(153, 153, 0)", "rgb(102, 204, 0)", 
     "rgb(204, 204, 0)", "rgb(128, 255, 0)", "rgb(255, 255, 0)", "rgb(153, 255, 0)", "rgb(255, 255, 51)"]},
@@ -160,18 +161,23 @@ d3.json(`/samples/${sample}`).then(function(data) {
   var labels1 = data.otu_labels;
   var array = []
   for (var j = 0; j < otu_ids1.length; j++) {
-    array.push({'samples1': samples1[j], 'otu_ids1': otu_ids1[j], 'otu_labels1': labels1[j]}
+    array.push({'samples1': samples1[j], 'otu_ids1': otu_ids1[j], 'labels1': labels1[j]}
   )};
  var sorted = array.sort(function(a, b) {
-    return parseFloat(b.samples1) - parseFloat(a.samples1);
+    // return parseFloat(b.samples1) - parseFloat(a.samples1);
+    return ((a.samples1>b.samples1) ? -1 :((a.samples1==b.samples1)? 0:1));
   });
-  sorted.sort();
-  sorted = sorted.slice(0, 10);
-  sorted = sorted.reverse();
-  console.log(sorted);
-  var samples = sorted.map(row => row.samples1);
-  var otu_ids = sorted.map(row => row.otu_ids1);
-  var labels = sorted.map(row=> row.labels1);
+  for (var k = 0; k<array.length;k++){
+    samples1[k]=array[k].samples1;
+    otu_ids1[k]=array[k].otu_ids1;
+    labels1[k]=array[k].labels1;
+  }
+  labels = labels1.slice(0,10)
+  samples = samples1.slice(0,10)
+  otu_ids=otu_ids1.slice(0,10)
+  console.log(samples)
+
+
     var data1 = [{
       x: otu_ids,
       y: samples,
